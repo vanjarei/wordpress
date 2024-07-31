@@ -10,6 +10,7 @@ services:
       - MYSQL_DATABASE=wordpress
     volumes:
       - dbdata:/var/lib/mysql
+      - ./sqld:/var/lib/mysql:rw
     command: '--default-authentication-plugin=mysql_native_password'
     networks:
       - app-network
@@ -28,6 +29,7 @@ services:
       - WORDPRESS_DB_NAME=wordpress
     volumes:
       - wordpress:/var/www/html
+      - ./wpdata:/var/www/html
     networks:
       - app-network
 
@@ -41,7 +43,7 @@ services:
       - "8080:80"
     volumes:
       - wordpress:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
+      - ./nginx-conf:/etc/nginx/conf.d:rw
       # - certbot-etc:/etc/letsencrypt
     networks:
       - app-network
